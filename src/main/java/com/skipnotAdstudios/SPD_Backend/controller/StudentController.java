@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 
 
 @RestController
@@ -54,4 +56,15 @@ public Student testAddStudent() {
     public Student getStudentByCode(@RequestParam String studentCode) {
     return studentService.getStudentByCode(studentCode);
     }
+    @GetMapping("/teststudent")
+    public List<Student> testStudent() {
+    return studentService.getAllStudents();
+    }
+    @Autowired
+private DataSource dataSource;
+
+@GetMapping("/dbcheck")
+public String dbCheck() throws Exception {
+    return dataSource.getConnection().getMetaData().getURL();
+}
 }
