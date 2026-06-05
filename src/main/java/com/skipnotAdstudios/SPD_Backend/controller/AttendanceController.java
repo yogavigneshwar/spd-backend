@@ -13,7 +13,11 @@ import com.skipnotAdstudios.SPD_Backend.repository.StudentRepository;
 
 @RestController
 @RequestMapping("/attendance")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin (origins = {
+    "http://localhost:5173" ,
+    "https://spd-frontend.vercel.app"
+}
+)
 public class AttendanceController {
 
     @Autowired
