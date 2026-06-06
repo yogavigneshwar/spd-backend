@@ -9,12 +9,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/coach")
-@CrossOrigin(
-    origins = {
-        "http://localhost:5173",
-        "https://spd-frontend.vercel.app"
-    }
-)
+@CrossOrigin(origins = {
+    "http://localhost:5173",
+    "https://spd-frontend.vercel.app",
+    "https://spdsportsportal.in",
+    "https://www.spdsportsportal.in"
+})
 public class CoachController {
 
     @Autowired

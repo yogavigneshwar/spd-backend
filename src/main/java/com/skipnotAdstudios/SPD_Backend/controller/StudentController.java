@@ -11,7 +11,12 @@ import javax.sql.DataSource;
 
 @RestController
 @RequestMapping("/student")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {
+    "http://localhost:5173",
+    "https://spd-frontend.vercel.app",
+    "https://spdsportsportal.in",
+    "https://www.spdsportsportal.in"
+})
 public class StudentController {
 
     @Autowired
