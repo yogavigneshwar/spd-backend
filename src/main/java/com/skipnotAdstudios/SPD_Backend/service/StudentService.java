@@ -22,7 +22,18 @@ public class StudentService {
     }
 
     public Student loginStudent(String parentMobile, String password) {
-        return studentRepository.findByParentMobileAndPassword(parentMobile, password);
+        Student student = studentRepository.findByParentMobileAndPassword(parentMobile, password);
+        if (student != null && (student.getStudentCode() == null || student.getStudentCode().trim().isEmpty())) {
+            long count = studentRepository.count() + 1;
+            String generatedCode = String.format("SSF-SPD-%03d", count);
+            while (studentRepository.findByStudentCode(generatedCode) != null) {
+                count++;
+                generatedCode = String.format("SSF-SPD-%03d", count);
+            }
+            student.setStudentCode(generatedCode);
+            student = studentRepository.save(student);
+        }
+        return student;
     }
     public Student getStudentByCode(String studentCode) {
     return studentRepository.findByStudentCode(studentCode);
