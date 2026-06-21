@@ -55,6 +55,16 @@ public Student testAddStudent() {
 
     student.setCurrentDay(1);
 
+    if (student.getStudentCode() == null || student.getStudentCode().trim().isEmpty()) {
+        long count = studentService.getStudentCount() + 1;
+        String generatedCode = String.format("SSF-SPD-%03d", count);
+        while (studentService.getStudentByCode(generatedCode) != null) {
+            count++;
+            generatedCode = String.format("SSF-SPD-%03d", count);
+        }
+        student.setStudentCode(generatedCode);
+    }
+
     return studentService.saveStudent(student);
     }
     @GetMapping("/code")
