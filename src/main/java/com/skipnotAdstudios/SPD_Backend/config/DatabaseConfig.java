@@ -16,8 +16,11 @@ public class DatabaseConfig {
     @Primary
     public DataSource dataSource() throws URISyntaxException {
         String databaseUrl = System.getenv("MYSQL_PUBLIC_URL");
+        System.out.println("[DatabaseConfig] MYSQL_PUBLIC_URL: " + (databaseUrl != null ? "FOUND" : "NOT FOUND"));
+        
         if (databaseUrl == null || databaseUrl.isEmpty()) {
             databaseUrl = System.getenv("MYSQL_URL");
+            System.out.println("[DatabaseConfig] MYSQL_URL: " + (databaseUrl != null ? "FOUND" : "NOT FOUND"));
         }
 
         HikariDataSource dataSource = new HikariDataSource();
@@ -40,6 +43,8 @@ public class DatabaseConfig {
             }
 
             String jdbcUrl = "jdbc:mysql://" + host + (port != -1 ? ":" + port : "") + path + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+            System.out.println("[DatabaseConfig] Reconstructed JDBC URL from URL: " + jdbcUrl);
+            System.out.println("[DatabaseConfig] Reconstructed Username: " + username);
             
             dataSource.setJdbcUrl(jdbcUrl);
             if (!username.isEmpty()) {
@@ -51,17 +56,22 @@ public class DatabaseConfig {
         } else {
             // Fallback to localhost properties or other env vars
             String host = System.getenv("MYSQLHOST");
-            if (host == null) host = "localhost";
             String port = System.getenv("MYSQLPORT");
-            if (port == null) port = "3306";
             String database = System.getenv("MYSQLDATABASE");
-            if (database == null) database = "spd";
             String user = System.getenv("MYSQLUSER");
-            if (user == null) user = "root";
             String password = System.getenv("MYSQLPASSWORD");
+            
+            System.out.println("[DatabaseConfig] Falling back to separate env variables. MYSQLHOST: " + host + ", MYSQLPORT: " + port + ", MYSQLDATABASE: " + database + ", MYSQLUSER: " + user);
+
+            if (host == null) host = "localhost";
+            if (port == null) port = "3306";
+            if (database == null) database = "spd";
+            if (user == null) user = "root";
             if (password == null) password = "";
 
             String jdbcUrl = "jdbc:mysql://" + host + ":" + port + "/" + database + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
+            System.out.println("[DatabaseConfig] Reconstructed JDBC URL from fallback: " + jdbcUrl);
+            
             dataSource.setJdbcUrl(jdbcUrl);
             dataSource.setUsername(user);
             dataSource.setPassword(password);
