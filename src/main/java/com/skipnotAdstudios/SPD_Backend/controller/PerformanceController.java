@@ -27,6 +27,9 @@ public class PerformanceController {
 
     @PostMapping("/add")
     public Performance addPerformance(@RequestBody Performance performance) {
+        if (performance.getRecordedDate() == null) {
+            performance.setRecordedDate(java.time.LocalDate.now());
+        }
         return performanceService.savePerformance(performance);
     }
     @GetMapping("/student/{studentId}")
