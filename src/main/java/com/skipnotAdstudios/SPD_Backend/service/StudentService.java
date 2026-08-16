@@ -22,18 +22,29 @@ public class StudentService {
     }
 
     public Student loginStudent(String parentMobile, String password) {
-        Student student = studentRepository.findByParentMobileAndPassword(parentMobile, password);
-        if (student != null && (student.getStudentCode() == null || student.getStudentCode().trim().isEmpty())) {
-            long count = studentRepository.count() + 1;
-            String generatedCode = String.format("SSF-SPD-%03d", count);
-            while (studentRepository.findByStudentCode(generatedCode) != null) {
-                count++;
-                generatedCode = String.format("SSF-SPD-%03d", count);
-            }
-            student.setStudentCode(generatedCode);
-            student = studentRepository.save(student);
+        if (parentMobile == null || password == null) {
+            return null;
         }
-        return student;
+        List<Student> students = studentRepository.findAll();
+        for (Student student : students) {
+            if (student.getParentMobile() != null && student.getPassword() != null &&
+                student.getParentMobile().trim().equals(parentMobile.trim()) &&
+                student.getPassword().trim().equals(password.trim())) {
+                
+                if (student.getStudentCode() == null || student.getStudentCode().trim().isEmpty()) {
+                    long count = studentRepository.count() + 1;
+                    String generatedCode = String.format("SSF-SPD-%03d", count);
+                    while (studentRepository.findByStudentCode(generatedCode) != null) {
+                        count++;
+                        generatedCode = String.format("SSF-SPD-%03d", count);
+                    }
+                    student.setStudentCode(generatedCode);
+                    student = studentRepository.save(student);
+                }
+                return student;
+            }
+        }
+        return null;
     }
     public Student getStudentByCode(String studentCode) {
     return studentRepository.findByStudentCode(studentCode);
