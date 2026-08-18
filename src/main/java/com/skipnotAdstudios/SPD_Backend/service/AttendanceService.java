@@ -22,7 +22,17 @@ public class AttendanceService {
         return attendanceRepository.findAll();
     }
     public boolean attendanceExists(Integer studentId, LocalDate date) {
-    return attendanceRepository.existsByStudentIdAndDate(studentId, date);
+        return attendanceRepository.existsByStudentIdAndDate(studentId, date);
+    }
+    public boolean attendanceExistsInLastHour(Integer studentId) {
+        List<Attendance> list = attendanceRepository.findByStudentId(studentId);
+        java.time.LocalDateTime oneHourAgo = java.time.LocalDateTime.now().minusHours(1);
+        for (Attendance att : list) {
+            if (att.getScannedAt() != null && att.getScannedAt().isAfter(oneHourAgo)) {
+                return true;
+            }
+        }
+        return false;
     }
     public List<Attendance> getAttendanceByStudentId(Integer studentId) {
     return attendanceRepository.findByStudentId(studentId);

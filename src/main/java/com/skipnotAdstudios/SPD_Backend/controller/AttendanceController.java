@@ -57,13 +57,9 @@ public Attendance addAttendance(@RequestBody Map<String, String> body) {
         return error;
     }
 
-    boolean exists =
-            attendanceService.attendanceExists(
-                    student.getId(),
-                    LocalDate.now()
-            );
+    boolean existsInLastHour = attendanceService.attendanceExistsInLastHour(student.getId());
 
-    if (exists) {
+    if (existsInLastHour) {
         Attendance already = new Attendance();
         already.setRemarks("ALREADY_MARKED");
         return already;
@@ -77,6 +73,7 @@ public Attendance addAttendance(@RequestBody Map<String, String> body) {
     attendance.setCoachId(1);
 
     attendance.setDate(LocalDate.now());
+    attendance.setScannedAt(java.time.LocalDateTime.now());
     attendance.setStatus("PRESENT");
     attendance.setRemarks("QR Scan");
 

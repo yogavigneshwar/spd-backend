@@ -27,4 +27,7 @@ public class Attendance {
     private String status;
 
     private String remarks;
+
+    @Column(name = "scanned_at")
+    private java.time.LocalDateTime scannedAt;
 }
