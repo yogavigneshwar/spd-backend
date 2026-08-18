@@ -73,7 +73,12 @@ public Student testAddStudent() {
     }
     @GetMapping("/teststudent")
     public List<Student> testStudent() {
-    return studentService.getAllStudents();
+        return studentService.getAllStudents();
+    }
+
+    @GetMapping("/deduplicate")
+    public java.util.Map<String, Object> deduplicateStudents() {
+        return studentService.deduplicateStudents();
     }
     @Autowired
 private DataSource dataSource;
