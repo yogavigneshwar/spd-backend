@@ -87,4 +87,9 @@ private DataSource dataSource;
 public String dbCheck() throws Exception {
     return dataSource.getConnection().getMetaData().getURL();
 }
+
+@DeleteMapping("/delete/{id}")
+public void deleteStudent(@PathVariable Integer id) {
+    studentService.deleteStudent(id);
+}
 }

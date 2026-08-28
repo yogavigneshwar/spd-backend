@@ -138,4 +138,18 @@ public class StudentService {
         result.put("details", mergedDetails);
         return result;
     }
+
+    @org.springframework.transaction.annotation.Transactional
+    public void deleteStudent(Integer id) {
+        List<com.skipnotAdstudios.SPD_Backend.entity.Attendance> attendanceList = attendanceRepository.findByStudentId(id);
+        attendanceRepository.deleteAll(attendanceList);
+
+        List<com.skipnotAdstudios.SPD_Backend.entity.Performance> performanceList = performanceRepository.findByStudentId(id);
+        performanceRepository.deleteAll(performanceList);
+
+        List<com.skipnotAdstudios.SPD_Backend.entity.CompetitionResult> resultsList = competitionResultRepository.findByStudentId(id);
+        competitionResultRepository.deleteAll(resultsList);
+
+        studentRepository.deleteById(id);
+    }
 }
