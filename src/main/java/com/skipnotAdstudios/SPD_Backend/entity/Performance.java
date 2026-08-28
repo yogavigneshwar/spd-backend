@@ -17,17 +17,17 @@ public class Performance {
     @Column(name = "student_id", nullable = false)
     private Integer studentId;
 
-    private Double height;
+    private String height;
 
-    private Double weight;
+    private String weight;
 
-    private Double speed;
+    private String speed;
 
-    private Double stamina;
+    private String stamina;
 
-    private Double strength;
+    private String strength;
 
-    private Double flexibility;
+    private String flexibility;
 
     private String remarks;
 
