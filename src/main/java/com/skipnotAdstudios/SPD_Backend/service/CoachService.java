@@ -18,7 +18,7 @@ public class CoachService {
     }
 
     public List<Coach> getAllCoaches() {
-        return coachRepository.findAll();
+        return coachRepository.findAll(org.springframework.data.domain.Sort.by(org.springframework.data.domain.Sort.Direction.ASC, "coachName"));
     }
 
     public Coach loginCoach(String mobile, String password) {
