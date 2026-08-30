@@ -28,7 +28,7 @@ public class PerformanceController {
     @PostMapping("/add")
     public Performance addPerformance(@RequestBody Performance performance) {
         if (performance.getRecordedDate() == null) {
-            performance.setRecordedDate(java.time.LocalDate.now());
+            performance.setRecordedDate(java.time.LocalDate.now(java.time.ZoneId.of("Asia/Kolkata")));
         }
         return performanceService.savePerformance(performance);
     }
