@@ -27,6 +27,16 @@ public class NutritionController {
         return nutritionService.saveOrUpdateNutrition(nutrition);
     }
 
+    @GetMapping("/all")
+    public List<Nutrition> getAllNutrition() {
+        return nutritionService.getAllNutrition();
+    }
+
+    @GetMapping("/date/{date}")
+    public List<Nutrition> getNutritionByDate(@PathVariable String date) {
+        return nutritionService.getNutritionByDate(LocalDate.parse(date));
+    }
+
     @GetMapping("/student/{studentId}")
     public List<Nutrition> getStudentNutrition(@PathVariable Integer studentId) {
         return nutritionService.getNutritionByStudentId(studentId);

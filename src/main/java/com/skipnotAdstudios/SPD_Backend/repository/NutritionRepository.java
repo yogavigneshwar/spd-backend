@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface NutritionRepository extends JpaRepository<Nutrition, Integer> {
     List<Nutrition> findByStudentIdOrderByLogDateDesc(Integer studentId);
     Optional<Nutrition> findByStudentIdAndLogDate(Integer studentId, LocalDate logDate);
+    List<Nutrition> findByLogDate(LocalDate logDate);
+    List<Nutrition> findAllByOrderByLogDateDesc();
 }

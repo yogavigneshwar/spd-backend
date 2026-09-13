@@ -56,4 +56,12 @@ public class NutritionService {
     public Optional<Nutrition> getNutritionByStudentIdAndDate(Integer studentId, LocalDate date) {
         return nutritionRepository.findByStudentIdAndLogDate(studentId, date);
     }
+
+    public List<Nutrition> getAllNutrition() {
+        return nutritionRepository.findAllByOrderByLogDateDesc();
+    }
+
+    public List<Nutrition> getNutritionByDate(LocalDate date) {
+        return nutritionRepository.findByLogDate(date);
+    }
 }
