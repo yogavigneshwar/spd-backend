@@ -22,9 +22,6 @@ public class StudentService {
     @Autowired
     private com.skipnotAdstudios.SPD_Backend.repository.CompetitionResultRepository competitionResultRepository;
 
-    @Autowired
-    private com.skipnotAdstudios.SPD_Backend.repository.NutritionRepository nutritionRepository;
-
     public Student saveStudent(Student student) {
         return studentRepository.save(student);
     }
@@ -152,9 +149,6 @@ public class StudentService {
 
         List<com.skipnotAdstudios.SPD_Backend.entity.CompetitionResult> resultsList = competitionResultRepository.findByStudentId(id);
         competitionResultRepository.deleteAll(resultsList);
-
-        List<com.skipnotAdstudios.SPD_Backend.entity.Nutrition> nutritionList = nutritionRepository.findByStudentIdOrderByLogDateDesc(id);
-        nutritionRepository.deleteAll(nutritionList);
 
         studentRepository.deleteById(id);
     }
