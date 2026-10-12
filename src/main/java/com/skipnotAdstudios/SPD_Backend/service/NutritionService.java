@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -63,5 +65,14 @@ public class NutritionService {
 
     public List<Nutrition> getNutritionByDate(LocalDate date) {
         return nutritionRepository.findByLogDate(date);
+    }
+
+    public Map<String, Object> clearAllNutrition() {
+        long count = nutritionRepository.count();
+        nutritionRepository.deleteAll();
+        Map<String, Object> res = new HashMap<>();
+        res.put("status", "SUCCESS");
+        res.put("deletedCount", count);
+        return res;
     }
 }

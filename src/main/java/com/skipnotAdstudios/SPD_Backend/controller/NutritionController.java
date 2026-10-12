@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -45,5 +46,15 @@ public class NutritionController {
     @GetMapping("/student/{studentId}/date/{date}")
     public Optional<Nutrition> getStudentNutritionByDate(@PathVariable Integer studentId, @PathVariable String date) {
         return nutritionService.getNutritionByStudentIdAndDate(studentId, LocalDate.parse(date));
+    }
+
+    @GetMapping("/clear-all")
+    public Map<String, Object> clearAllNutrition() {
+        return nutritionService.clearAllNutrition();
+    }
+
+    @DeleteMapping("/clear-all")
+    public Map<String, Object> clearAllNutritionDelete() {
+        return nutritionService.clearAllNutrition();
     }
 }
